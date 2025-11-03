@@ -1,3 +1,11 @@
+# Dependencies
 node_modules
+
+# Build artifacts
 *.vsix
+
+# Testing
 .vscode-test/
+
+# Note: .claude/ is intentionally tracked
+# It contains project documentation for AI assistants and collaborators
