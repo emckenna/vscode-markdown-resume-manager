@@ -8,5 +8,12 @@ node_modules
 .vscode-test/
 test-workspace/build/
 
+# Secrets (NEVER commit these!)
+.env
+.env.local
+*.pem
+*.key
+.vsce-token
+
 # Note: .claude/ is intentionally tracked
 # It contains project documentation for AI assistants and collaborators

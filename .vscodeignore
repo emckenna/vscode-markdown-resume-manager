@@ -5,3 +5,13 @@ test/**
 .eslintrc.json
 **/*.map
 **/tsconfig.json
+
+# Secrets - never package these
+.env
+.env.*
+*.pem
+*.key
+.vsce-token
+
+# Development files
+test-workspace/**

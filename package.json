@@ -3,7 +3,7 @@
   "displayName": "Markdown Resume Manager",
   "description": "Manage markdown-based resumes and cover letters with automated build support",
   "version": "1.0.0",
-  "publisher": "emckenna",
+  "publisher": "EricMcKenna",
   "author": "Eric McKenna",
   "license": "MIT",
   "repository": {
@@ -34,6 +34,11 @@
   "main": "./extension.js",
   "contributes": {
     "commands": [
+      {
+        "command": "markdownResumeManager.initProject",
+        "title": "Initialize Project Structure",
+        "category": "Resume Manager"
+      },
       {
         "command": "markdownResumeManager.newResume",
         "title": "Create New Resume",
@@ -87,11 +92,6 @@
     "configuration": {
       "title": "Markdown Resume Manager",
       "properties": {
-        "markdownResumeManager.buildScriptPath": {
-          "type": "string",
-          "default": "./scripts/build.sh",
-          "description": "Path to the build script relative to workspace root"
-        },
         "markdownResumeManager.resumeOutputName": {
           "type": "string",
           "default": "Your_Name_Resume",
@@ -109,7 +109,11 @@
     "test": "vscode-test",
     "lint": "echo 'No linting configured'",
     "package": "vsce package",
-    "publish": "vsce publish"
+    "prepublish": "npm test",
+    "publish": "bash -c 'export $(grep -v \"^#\" .env | xargs) && vsce publish --pat $VSCE_PAT'",
+    "publish:major": "bash -c 'export $(grep -v \"^#\" .env | xargs) && vsce publish major --pat $VSCE_PAT'",
+    "publish:minor": "bash -c 'export $(grep -v \"^#\" .env | xargs) && vsce publish minor --pat $VSCE_PAT'",
+    "publish:patch": "bash -c 'export $(grep -v \"^#\" .env | xargs) && vsce publish patch --pat $VSCE_PAT'"
   },
   "devDependencies": {
     "@vscode/test-cli": "^0.0.4",

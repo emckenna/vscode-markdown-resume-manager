@@ -44,7 +44,12 @@ function activate(context) {
         await openBuildFolderForCurrentFile(workspaceRoot);
     });
 
-    context.subscriptions.push(newResume, newCoverLetter, buildDocument, buildDocumentPDF, openBuildFolderCommand);
+    // Command: Initialize Project
+    let initProject = vscode.commands.registerCommand('markdownResumeManager.initProject', async () => {
+        await initializeProject(workspaceRoot);
+    });
+
+    context.subscriptions.push(newResume, newCoverLetter, buildDocument, buildDocumentPDF, openBuildFolderCommand, initProject);
 }
 
 async function createDocument(type, workspaceRoot) {
@@ -170,37 +175,52 @@ async function buildCurrentDocument(includePDF, workspaceRoot) {
 
 async function buildFile(filePath, includePDF, workspaceRoot) {
     try {
-        // Get build script path from configuration
-        const config = vscode.workspace.getConfiguration('markdownResumeManager');
-        const buildScriptPath = config.get('buildScriptPath', './scripts/build.sh');
-        const buildScript = path.join(workspaceRoot, buildScriptPath);
-
-        // Check if build script exists
-        if (!fs.existsSync(buildScript)) {
-            vscode.window.showErrorMessage(`Build script not found: ${buildScriptPath}. Please check your settings.`);
+        // Check if pandoc is installed
+        try {
+            await execAsync('pandoc --version');
+        } catch (error) {
+            vscode.window.showErrorMessage('Pandoc is not installed. Please install Pandoc from https://pandoc.org/installing.html');
             return;
         }
-
-        const format = includePDF ? 'docx,pdf' : 'docx';
-        const command = `"${buildScript}" -f ${format} "${filePath}"`;
 
         vscode.window.showInformationMessage('Building document...');
 
-        const { stdout, stderr } = await execAsync(command, {
-            cwd: workspaceRoot,
-            shell: process.platform === 'win32' ? 'cmd.exe' : '/bin/bash'
-        });
-
-        if (stderr && !stderr.includes('warning')) {
-            vscode.window.showErrorMessage(`Build error: ${stderr}`);
-            return;
-        }
-
-        vscode.window.showInformationMessage('Build complete!');
-
-        // Extract company name and offer to open build folder
+        // Get configuration
+        const config = vscode.workspace.getConfiguration('markdownResumeManager');
         const filename = path.basename(filePath, '.md');
         const company = filename.split('-')[0];
+
+        // Determine output name based on file location
+        let outputName;
+        if (filePath.includes('cover-letter')) {
+            outputName = config.get('coverLetterOutputName', 'Your_Name_Cover_Letter');
+        } else {
+            outputName = config.get('resumeOutputName', 'Your_Name_Resume');
+        }
+
+        // Create build directory
+        const buildDir = path.join(workspaceRoot, 'build', company);
+        if (!fs.existsSync(buildDir)) {
+            fs.mkdirSync(buildDir, { recursive: true });
+        }
+
+        // Build DOCX
+        const docxOutput = path.join(buildDir, `${outputName}.docx`);
+        const docxCommand = `pandoc "${filePath}" -o "${docxOutput}"`;
+
+        await execAsync(docxCommand, { cwd: workspaceRoot });
+
+        // Build PDF if requested
+        if (includePDF) {
+            const pdfOutput = path.join(buildDir, `${outputName}.pdf`);
+            const pdfCommand = `pandoc "${filePath}" -o "${pdfOutput}"`;
+
+            try {
+                await execAsync(pdfCommand, { cwd: workspaceRoot });
+            } catch (error) {
+                vscode.window.showWarningMessage('PDF generation failed. Install WeasyPrint for better PDF support: pip install weasyprint');
+            }
+        }
 
         const openFolder = await vscode.window.showInformationMessage(
             `Document built successfully for ${company}`,
@@ -241,6 +261,63 @@ async function openBuildFolder(company, workspaceRoot) {
 
     const folderUri = vscode.Uri.file(buildFolder);
     await vscode.commands.executeCommand('revealFileInOS', folderUri);
+}
+
+async function initializeProject(workspaceRoot) {
+    try {
+        const directories = [
+            'resumes/tailored',
+            'cover-letters/tailored',
+            'templates'
+        ];
+
+        let created = [];
+        let skipped = [];
+
+        for (const dir of directories) {
+            const fullPath = path.join(workspaceRoot, dir);
+            if (!fs.existsSync(fullPath)) {
+                fs.mkdirSync(fullPath, { recursive: true });
+                created.push(dir);
+            } else {
+                skipped.push(dir);
+            }
+        }
+
+        // Build message
+        let message = '✅ Project initialized!\n\n';
+
+        if (created.length > 0) {
+            message += `Created:\n${created.map(d => `  • ${d}`).join('\n')}\n\n`;
+        }
+
+        if (skipped.length > 0) {
+            message += `Already existed:\n${skipped.map(d => `  • ${d}`).join('\n')}\n\n`;
+        }
+
+        // Check if pandoc is installed
+        try {
+            await execAsync('pandoc --version');
+            message += '✓ Pandoc is installed\n';
+        } catch (error) {
+            message += '\n⚠️  Pandoc not found!\n';
+            message += 'Install from: https://pandoc.org/installing.html\n';
+        }
+
+        const action = await vscode.window.showInformationMessage(
+            message,
+            'OK',
+            'Open Workspace Folder'
+        );
+
+        if (action === 'Open Workspace Folder') {
+            const folderUri = vscode.Uri.file(workspaceRoot);
+            await vscode.commands.executeCommand('revealFileInOS', folderUri);
+        }
+
+    } catch (error) {
+        vscode.window.showErrorMessage(`Failed to initialize project: ${error.message}`);
+    }
 }
 
 function deactivate() {}

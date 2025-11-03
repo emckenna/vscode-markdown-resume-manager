@@ -137,19 +137,42 @@ suite('Markdown Resume Manager Extension Tests', () => {
     });
   });
 
-  suite('Build Script Detection', () => {
-    test('Should check for build script existence', function() {
+  suite('Project Initialization', () => {
+    test('Init command should be registered', async () => {
+      const commands = await vscode.commands.getCommands(true);
+      assert.ok(
+        commands.includes('markdownResumeManager.initProject'),
+        'Init project command should be registered'
+      );
+    });
+
+    test('Should create required directories', async function() {
       const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri?.fsPath;
       if (!workspaceRoot) {
         this.skip();
         return;
       }
 
-      const buildScript = path.join(workspaceRoot, 'scripts', 'build.sh');
+      const requiredDirs = [
+        'resumes/tailored',
+        'cover-letters/tailored',
+        'templates'
+      ];
 
-      // In a real test workspace, this would check if script exists
-      // For now, just verify path construction
-      assert.ok(buildScript.includes('scripts/build.sh'));
+      // Execute init command
+      await vscode.commands.executeCommand('markdownResumeManager.initProject');
+
+      // Give it a moment to complete
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // Check that directories exist
+      for (const dir of requiredDirs) {
+        const fullPath = path.join(workspaceRoot, dir);
+        assert.ok(
+          fs.existsSync(fullPath),
+          `Directory ${dir} should exist after initialization`
+        );
+      }
     });
   });
 });

@@ -16,49 +16,48 @@ A VS Code extension for managing markdown-based resumes and cover letters with a
 ## Requirements
 
 - [Pandoc](https://pandoc.org/installing.html) - Required for markdown-to-DOCX/PDF conversion
+  - Windows: Download the installer from pandoc.org
+  - macOS: `brew install pandoc`
+  - Linux: `sudo apt install pandoc` or equivalent
 - Optional: [WeasyPrint](https://weasyprint.org/) - For better PDF generation (`pip install weasyprint`)
 
 ## Getting Started
 
 ### 1. Install the Extension
 
-Install from the VS Code Marketplace or manually:
+**From VS Code Marketplace:**
+1. Open VS Code
+2. Go to Extensions (Ctrl+Shift+X)
+3. Search for "Markdown Resume Manager"
+4. Click Install
 
+**Or install manually:**
 ```bash
-# Clone or download this extension
-git clone https://github.com/emckenna/markdown-resume-manager.git
-cd vscode-markdown-resume-manager
-
-# Install dependencies
-npm install
-
-# Package the extension
-npm install -g @vscode/vsce
-vsce package
-
-# Install the .vsix file in VS Code
 code --install-extension markdown-resume-manager-1.0.0.vsix
 ```
 
-### 2. Set Up Your Project
+### 2. Install Pandoc
 
-Create a workspace with this structure:
+Make sure Pandoc is installed on your system:
+- Download from [pandoc.org/installing.html](https://pandoc.org/installing.html)
+- Verify installation: `pandoc --version`
 
+### 3. Initialize Your Project
+
+1. Open a folder in VS Code (or create a new one)
+2. Open Command Palette (Ctrl+Shift+P)
+3. Run: **Resume Manager: Initialize Project Structure**
+
+This creates:
 ```
 your-resume-project/
 ├── resumes/
 │   └── tailored/          # Company-specific resumes
 ├── cover-letters/
 │   └── tailored/          # Company-specific cover letters
-├── build/                 # Generated DOCX/PDF files (auto-created)
-├── scripts/
-│   └── build.sh           # Build script (required)
-└── templates/             # Base templates
+├── templates/             # Base templates
+└── build/                 # Generated DOCX/PDF files (auto-created)
 ```
-
-### 3. Add the Build Script
-
-Download `build.sh` from the [markdown-resume-manager repository](https://github.com/emckenna/markdown-resume-manager) and place it in `scripts/build.sh`.
 
 ## Usage
 
@@ -107,6 +106,7 @@ While editing a markdown resume or cover letter:
 
 All commands are available via the Command Palette (`Ctrl+Shift+P`):
 
+- `Resume Manager: Initialize Project Structure` - Set up the required folder structure
 - `Resume Manager: Create New Resume` - Create a new tailored resume
 - `Resume Manager: Create New Cover Letter` - Create a new cover letter
 - `Resume Manager: Build Current Document (DOCX)` - Build to DOCX
@@ -130,7 +130,6 @@ Configure the extension in VS Code settings:
 
 ```json
 {
-  "markdownResumeManager.buildScriptPath": "./scripts/build.sh",
   "markdownResumeManager.resumeOutputName": "Your_Name_Resume",
   "markdownResumeManager.coverLetterOutputName": "Your_Name_Cover_Letter"
 }
@@ -138,7 +137,6 @@ Configure the extension in VS Code settings:
 
 ### Settings
 
-- `markdownResumeManager.buildScriptPath` - Path to build script (default: `./scripts/build.sh`)
 - `markdownResumeManager.resumeOutputName` - Output filename for resumes without extension (default: `Your_Name_Resume`)
 - `markdownResumeManager.coverLetterOutputName` - Output filename for cover letters without extension (default: `Your_Name_Cover_Letter`)
 
@@ -180,26 +178,35 @@ Configure the extension in VS Code settings:
 
 ## Troubleshooting
 
-### "Build script not found"
-- Ensure `scripts/build.sh` exists in your workspace
-- Check the `markdownResumeManager.buildScriptPath` setting
-- Make sure the script is executable: `chmod +x scripts/build.sh`
+### "Pandoc is not installed"
 
-### "Pandoc not found"
-- Install Pandoc: https://pandoc.org/installing.html
+- Install Pandoc from [pandoc.org/installing.html](https://pandoc.org/installing.html)
+- **Windows**: Download and run the .msi installer
+- **macOS**: `brew install pandoc`
+- **Linux**: `sudo apt install pandoc` (or your distro's package manager)
 - Verify installation: `pandoc --version`
+- Restart VS Code after installing Pandoc
 
 ### "Build folder doesn't exist"
+
 - You need to build the document first before opening the build folder
 - The folder is created automatically during the first build
 
+### PDF generation failed
+
+- PDF generation requires additional dependencies
+- Install WeasyPrint: `pip install weasyprint`
+- Or use DOCX-only builds with `Ctrl+Shift+B`
+
 ### Keyboard shortcuts not working
+
 - Make sure you're editing a markdown file in `resumes/` or `cover-letters/`
 - Check for conflicting keybindings in VS Code settings
 
-## Related Projects
+### Extension not activating
 
-- [markdown-resume-manager](https://github.com/emckenna/markdown-resume-manager) - Template repository with build scripts and project structure
+- Make sure you have a workspace folder open
+- Extension activates when markdown files are present in the workspace
 
 ## Contributing
 
@@ -213,12 +220,53 @@ MIT License - see LICENSE file for details
 
 Eric McKenna - [GitHub](https://github.com/emckenna)
 
+## Publishing & Development
+
+### For Developers
+
+**Testing:**
+```bash
+npm test                    # Run extension tests
+```
+
+**Packaging:**
+```bash
+npm run package             # Create .vsix file for distribution
+```
+
+**Publishing to VS Code Marketplace:**
+
+1. Create a Personal Access Token:
+   - Go to https://dev.azure.com/
+   - User Settings → Personal Access Tokens
+   - Create token with **Marketplace > Manage** scope
+
+2. Store the token in `.env` file (already git-ignored):
+   ```bash
+   VSCE_PAT=your-token-here
+   ```
+
+3. Publish with npm scripts:
+   ```bash
+   npm run publish         # Publish current version
+   npm run publish:patch   # Bump patch version (1.0.0 → 1.0.1) and publish
+   npm run publish:minor   # Bump minor version (1.0.0 → 1.1.0) and publish
+   npm run publish:major   # Bump major version (1.0.0 → 2.0.0) and publish
+   ```
+
+**Note:** The `.env` file is excluded from git and packaging via `.gitignore` and `.vscodeignore` for security.
+
 ## Changelog
 
 ### 1.0.0 (2025-11-03)
-- Initial release
-- Create resumes and cover letters with interactive prompts
-- Build to DOCX and PDF
-- Clipboard paste support
-- Configurable output names
-- Cross-platform support (Windows, macOS, Linux)
+
+- ✨ Initial release
+- 📝 Create resumes and cover letters with interactive prompts
+- 🏗️ Build to DOCX and PDF using Pandoc (no shell scripts required!)
+- 📋 Clipboard paste support for quick content insertion
+- ⚙️ Configurable output names
+- 🌍 Full cross-platform support (Windows, macOS, Linux)
+- 🚀 One-command project initialization
+- ⌨️ Keyboard shortcuts for all major operations
+- ✅ Automated testing with 14 test suites
+- 📦 Native build system - no external scripts needed
