@@ -106,10 +106,17 @@
     }
   },
   "scripts": {
+    "test": "vscode-test",
     "lint": "echo 'No linting configured'",
     "package": "vsce package",
     "publish": "vsce publish"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@vscode/test-cli": "^0.0.4",
+    "@vscode/test-electron": "^2.3.8",
+    "@types/vscode": "^1.60.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.x"
+  },
   "dependencies": {}
 }

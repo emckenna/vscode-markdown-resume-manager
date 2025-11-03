@@ -6,7 +6,12 @@
 vscode-markdown-resume-manager/
 ├── extension.js          # Main extension code
 ├── package.json          # Extension manifest
+├── test/                 # Automated tests
+│   └── extension.test.js # Test suite
+├── test-workspace/       # Mock workspace for tests
+├── .vscode-test.mjs     # Test configuration
 ├── README.md            # User documentation
+├── TESTING.md           # Testing guide
 ├── CHANGELOG.md         # Version history
 ├── LICENSE              # MIT License
 ├── .vscodeignore        # Files to exclude from package
@@ -14,7 +19,25 @@ vscode-markdown-resume-manager/
 └── DEVELOPMENT.md       # This file
 ```
 
-## Testing the Extension
+## Automated Testing
+
+See [TESTING.md](TESTING.md) for detailed testing documentation.
+
+### Quick Test Commands
+
+```bash
+# Install dependencies (first time only)
+npm install
+
+# Run automated tests
+npm test
+```
+
+### Writing Tests
+
+Tests use Mocha and run in a VS Code Extension Development Host. See `test/extension.test.js` for examples.
+
+## Manual Testing
 
 ### Method 1: Run in Development Mode (Recommended)
 
