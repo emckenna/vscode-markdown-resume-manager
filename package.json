@@ -2,7 +2,7 @@
   "name": "markdown-resume-manager",
   "displayName": "Markdown Resume Manager",
   "description": "Manage markdown-based resumes and cover letters with automated build support",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "EricMcKenna",
   "author": "Eric McKenna",
   "license": "MIT",
