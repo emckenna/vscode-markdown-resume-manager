@@ -1,0 +1,115 @@
+{
+  "name": "markdown-resume-manager",
+  "displayName": "Markdown Resume Manager",
+  "description": "Manage markdown-based resumes and cover letters with automated build support",
+  "version": "1.0.0",
+  "publisher": "emckenna",
+  "author": "Eric McKenna",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/emckenna/vscode-markdown-resume-manager.git"
+  },
+  "bugs": {
+    "url": "https://github.com/emckenna/vscode-markdown-resume-manager/issues"
+  },
+  "homepage": "https://github.com/emckenna/vscode-markdown-resume-manager#readme",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "markdown",
+    "resume",
+    "cover letter",
+    "pandoc",
+    "job search",
+    "document generation"
+  ],
+  "activationEvents": [
+    "workspaceContains:**/*.md"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "markdownResumeManager.newResume",
+        "title": "Create New Resume",
+        "category": "Resume Manager"
+      },
+      {
+        "command": "markdownResumeManager.newCoverLetter",
+        "title": "Create New Cover Letter",
+        "category": "Resume Manager"
+      },
+      {
+        "command": "markdownResumeManager.buildDocument",
+        "title": "Build Current Document (DOCX)",
+        "category": "Resume Manager"
+      },
+      {
+        "command": "markdownResumeManager.buildDocumentPDF",
+        "title": "Build Current Document (DOCX + PDF)",
+        "category": "Resume Manager"
+      },
+      {
+        "command": "markdownResumeManager.openBuildFolder",
+        "title": "Open Build Folder",
+        "category": "Resume Manager"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "markdownResumeManager.newResume",
+        "key": "ctrl+shift+alt+n",
+        "mac": "cmd+shift+alt+n"
+      },
+      {
+        "command": "markdownResumeManager.newCoverLetter",
+        "key": "ctrl+shift+alt+c",
+        "mac": "cmd+shift+alt+c"
+      },
+      {
+        "command": "markdownResumeManager.buildDocument",
+        "key": "ctrl+shift+b",
+        "mac": "cmd+shift+b",
+        "when": "editorLangId == markdown && resourcePath =~ /\\/(resumes|cover-letters)\\//i"
+      },
+      {
+        "command": "markdownResumeManager.buildDocumentPDF",
+        "key": "ctrl+shift+alt+b",
+        "mac": "cmd+shift+alt+b",
+        "when": "editorLangId == markdown && resourcePath =~ /\\/(resumes|cover-letters)\\//i"
+      }
+    ],
+    "configuration": {
+      "title": "Markdown Resume Manager",
+      "properties": {
+        "markdownResumeManager.buildScriptPath": {
+          "type": "string",
+          "default": "./scripts/build.sh",
+          "description": "Path to the build script relative to workspace root"
+        },
+        "markdownResumeManager.resumeOutputName": {
+          "type": "string",
+          "default": "Your_Name_Resume",
+          "description": "Output filename for resumes (without extension)"
+        },
+        "markdownResumeManager.coverLetterOutputName": {
+          "type": "string",
+          "default": "Your_Name_Cover_Letter",
+          "description": "Output filename for cover letters (without extension)"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "lint": "echo 'No linting configured'",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {},
+  "dependencies": {}
+}
