@@ -127,7 +127,7 @@ suite('Markdown Resume Manager Extension Tests', () => {
       const testCases = [
         { input: 'Google Inc', expected: 'google-inc' },
         { input: 'ACME Corp', expected: 'acme-corp' },
-        { input: 'Test  Company', expected: 'test--company' }
+        { input: 'Test  Company', expected: 'test-company' }  // Multiple spaces become single dash
       ];
 
       for (const testCase of testCases) {

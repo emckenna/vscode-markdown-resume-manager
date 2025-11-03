@@ -5,7 +5,7 @@ export default defineConfig({
   version: 'stable',
   workspaceFolder: './test-workspace',
   mocha: {
-    ui: 'bdd',
+    ui: 'tdd',  // Use TDD interface (suite/test) instead of BDD (describe/it)
     timeout: 20000,
     color: true
   }
