@@ -7,6 +7,7 @@ All notable changes to the "Markdown Resume Manager" extension will be documente
 ### 🎉 Initial Release
 
 **Core Features:**
+
 - ✨ Interactive document creation with native VS Code prompts
 - 📝 Create company-specific resumes with position targeting
 - 💼 Create tailored cover letters
@@ -19,6 +20,7 @@ All notable changes to the "Markdown Resume Manager" extension will be documente
 - ⚙️ Configurable output filenames
 
 **Commands:**
+
 - `Resume Manager: Initialize Project Structure` - Set up folder structure
 - `Resume Manager: Create New Resume` - Create new tailored resume
 - `Resume Manager: Create New Cover Letter` - Create new cover letter
@@ -27,18 +29,21 @@ All notable changes to the "Markdown Resume Manager" extension will be documente
 - `Resume Manager: Open Build Folder` - Open build output folder
 
 **Keyboard Shortcuts:**
-- `Ctrl+Shift+Alt+N` - Create new resume
-- `Ctrl+Shift+Alt+C` - Create new cover letter
-- `Ctrl+Shift+B` - Build current document (DOCX)
-- `Ctrl+Shift+Alt+B` - Build current document (DOCX + PDF)
+
+- `Ctrl+K Ctrl+R` - Create new resume
+- `Ctrl+K Ctrl+C` - Create new cover letter
+- `Ctrl+K Ctrl+B` - Build current document (DOCX)
+- `Ctrl+K Ctrl+P` - Build current document (DOCX + PDF)
 
 **Cross-Platform Support:**
+
 - ✅ Windows (native Pandoc support, no WSL required)
 - ✅ macOS
 - ✅ Linux
 - No shell scripts or bash dependencies
 
 **Developer Features:**
+
 - ✅ Automated testing with 14 test suites (Mocha + @vscode/test-cli)
 - ✅ Test coverage for all major commands
 - ✅ Project initialization tests
@@ -46,10 +51,12 @@ All notable changes to the "Markdown Resume Manager" extension will be documente
 - ✅ Proper error handling and user notifications
 
 **Configuration:**
+
 - `markdownResumeManager.resumeOutputName` - Customize resume output filename
 - `markdownResumeManager.coverLetterOutputName` - Customize cover letter output filename
 
 ### Technical Details
+
 - Native JavaScript build system replaces bash scripts
 - Direct Pandoc integration via Node.js child_process
 - Automatic Pandoc availability checking

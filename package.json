@@ -6,6 +6,7 @@
   "publisher": "EricMcKenna",
   "author": "Eric McKenna",
   "license": "MIT",
+  "icon": "logo.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/emckenna/vscode-markdown-resume-manager.git"
@@ -68,24 +69,24 @@
     "keybindings": [
       {
         "command": "markdownResumeManager.newResume",
-        "key": "ctrl+shift+alt+n",
-        "mac": "cmd+shift+alt+n"
+        "key": "ctrl+k ctrl+r",
+        "mac": "cmd+k cmd+r"
       },
       {
         "command": "markdownResumeManager.newCoverLetter",
-        "key": "ctrl+shift+alt+c",
-        "mac": "cmd+shift+alt+c"
+        "key": "ctrl+k ctrl+c",
+        "mac": "cmd+k cmd+c"
       },
       {
         "command": "markdownResumeManager.buildDocument",
-        "key": "ctrl+shift+b",
-        "mac": "cmd+shift+b",
+        "key": "ctrl+k ctrl+b",
+        "mac": "cmd+k cmd+b",
         "when": "editorLangId == markdown && resourcePath =~ /\\/(resumes|cover-letters)\\//i"
       },
       {
         "command": "markdownResumeManager.buildDocumentPDF",
-        "key": "ctrl+shift+alt+b",
-        "mac": "cmd+shift+alt+b",
+        "key": "ctrl+k ctrl+p",
+        "mac": "cmd+k cmd+p",
         "when": "editorLangId == markdown && resourcePath =~ /\\/(resumes|cover-letters)\\//i"
       }
     ],

@@ -11,12 +11,10 @@ A VS Code extension for managing markdown-based resumes and cover letters with a
 - 🚀 **Quick Access** - Open build folders directly from VS Code
 - ⌨️ **Keyboard Shortcuts** - Efficient workflow with customizable keybindings
 
-![Demo](https://via.placeholder.com/800x450?text=Demo+GIF+Here)
-
 ## Requirements
 
 - [Pandoc](https://pandoc.org/installing.html) - Required for markdown-to-DOCX/PDF conversion
-  - Windows: Download the installer from pandoc.org
+  - Windows: Download the installer from [pandoc.org/installing.html](https://pandoc.org/installing.html)
   - macOS: `brew install pandoc`
   - Linux: `sudo apt install pandoc` or equivalent
 - Optional: [WeasyPrint](https://weasyprint.org/) - For better PDF generation (`pip install weasyprint`)
@@ -33,7 +31,7 @@ A VS Code extension for managing markdown-based resumes and cover letters with a
 
 **Or install manually:**
 ```bash
-code --install-extension markdown-resume-manager-1.0.0.vsix
+code --install-extension markdown-resume-manager-1.0.1.vsix
 ```
 
 ### 2. Install Pandoc
@@ -64,7 +62,8 @@ your-resume-project/
 ### Creating a New Resume
 
 **Method 1: Keyboard Shortcut**
-- Press `Ctrl+Shift+Alt+N` (Windows/Linux) or `Cmd+Shift+Alt+N` (Mac)
+
+- Press `Ctrl+K` then `Ctrl+R` (Windows/Linux) or `Cmd+K` then `Cmd+R` (Mac)
 
 **Method 2: Command Palette**
 - Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac)
@@ -115,12 +114,19 @@ All commands are available via the Command Palette (`Ctrl+Shift+P`):
 
 ## Keyboard Shortcuts
 
+This extension uses **chord keybindings** (two-step shortcuts) to avoid conflicts with VS Code's built-in commands. To use a chord keybinding, press the first key combination, release it, then press the second key combination.
+
+For example, to build a document:
+
+1. Press and release `Ctrl+K` (you'll see "Ctrl+K was pressed. Waiting for second key..." in the status bar)
+2. Then press `Ctrl+B`
+
 | Action | Windows/Linux | Mac |
 |--------|--------------|-----|
-| New Resume | `Ctrl+Shift+Alt+N` | `Cmd+Shift+Alt+N` |
-| New Cover Letter | `Ctrl+Shift+Alt+C` | `Cmd+Shift+Alt+C` |
-| Build (DOCX) | `Ctrl+Shift+B`* | `Cmd+Shift+B`* |
-| Build (DOCX+PDF) | `Ctrl+Shift+Alt+B` | `Cmd+Shift+Alt+B` |
+| New Resume | `Ctrl+K Ctrl+R` | `Cmd+K Cmd+R` |
+| New Cover Letter | `Ctrl+K Ctrl+C` | `Cmd+K Cmd+C` |
+| Build (DOCX) | `Ctrl+K Ctrl+B`* | `Cmd+K Cmd+B`* |
+| Build (DOCX+PDF) | `Ctrl+K Ctrl+P` | `Cmd+K Cmd+P` |
 
 *Only works when editing markdown files in `resumes/` or `cover-letters/` folders
 
