@@ -2,6 +2,38 @@
 
 All notable changes to the "Markdown Resume Manager" extension will be documented in this file.
 
+## [1.0.2] - 2025-11-04
+
+### 📚 Documentation
+
+**Improvements:**
+
+- Added PowerShell commands (`where pandoc` and `gcm pandoc`) to help Windows users find Pandoc installation path
+- Improved troubleshooting section with step-by-step instructions for configuring Pandoc path on Windows
+- Enhanced Windows setup experience
+
+## [1.0.1] - 2025-11-03
+
+### ✨ Features & Improvements
+
+**New Features:**
+
+- Added configurable Pandoc path setting (`markdownResumeManager.pandocPath`)
+- Users can now specify full path to Pandoc executable when it's not in PATH
+- Improved Windows compatibility for Pandoc detection
+
+**Bug Fixes:**
+
+- Fixed keyboard shortcuts not working on Windows due to path separator issues
+- Updated keybinding `when` clause to support both forward slashes and backslashes
+- Changed to chord keybindings (Ctrl+K Ctrl+Alt+Letter) to avoid conflicts with VS Code built-in shortcuts
+
+**Other Changes:**
+
+- Organized package output to dist/ folder
+- Updated documentation with keyboard shortcut explanations
+- Fixed version references in README
+
 ## [1.0.0] - 2025-11-03
 
 ### 🎉 Initial Release
