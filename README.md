@@ -144,7 +144,8 @@ Configure the extension in VS Code settings:
 ```json
 {
   "markdownResumeManager.resumeOutputName": "Your_Name_Resume",
-  "markdownResumeManager.coverLetterOutputName": "Your_Name_Cover_Letter"
+  "markdownResumeManager.coverLetterOutputName": "Your_Name_Cover_Letter",
+  "markdownResumeManager.pandocPath": "pandoc"
 }
 ```
 
@@ -152,6 +153,7 @@ Configure the extension in VS Code settings:
 
 - `markdownResumeManager.resumeOutputName` - Output filename for resumes without extension (default: `Your_Name_Resume`)
 - `markdownResumeManager.coverLetterOutputName` - Output filename for cover letters without extension (default: `Your_Name_Cover_Letter`)
+- `markdownResumeManager.pandocPath` - Path to Pandoc executable (default: `pandoc`). On Windows, if Pandoc is not in your PATH, set this to the full path: `C:\\Program Files\\Pandoc\\pandoc.exe`
 
 ## Typical Workflow with AI Tools
 
@@ -199,6 +201,12 @@ Configure the extension in VS Code settings:
 - **Linux**: `sudo apt install pandoc` (or your distro's package manager)
 - Verify installation: `pandoc --version`
 - Restart VS Code after installing Pandoc
+
+**Windows users:** If Pandoc is installed but not recognized:
+
+1. Open VS Code settings (Ctrl+,)
+2. Search for "Markdown Resume Manager"
+3. Set `Pandoc Path` to the full path: `C:\Program Files\Pandoc\pandoc.exe`
 
 ### "Build folder doesn't exist"
 

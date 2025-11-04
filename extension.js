@@ -175,19 +175,26 @@ async function buildCurrentDocument(includePDF, workspaceRoot) {
 
 async function buildFile(filePath, includePDF, workspaceRoot) {
     try {
+        // Get configuration
+        const config = vscode.workspace.getConfiguration('markdownResumeManager');
+        const pandocPath = config.get('pandocPath', 'pandoc');
+
         // Check if pandoc is installed
         try {
-            const pandocVersion = await execAsync('pandoc --version');
+            const pandocVersion = await execAsync(`"${pandocPath}" --version`);
+            console.log('Pandoc path:', pandocPath);
             console.log('Pandoc version:', pandocVersion.stdout);
         } catch (error) {
-            vscode.window.showErrorMessage('Pandoc is not installed. Please install Pandoc from https://pandoc.org/installing.html');
+            vscode.window.showErrorMessage(
+                'Pandoc is not installed or not found at the configured path. ' +
+                'Please install Pandoc from https://pandoc.org/installing.html or ' +
+                'configure the path in settings (markdownResumeManager.pandocPath)'
+            );
             return;
         }
 
         vscode.window.showInformationMessage('Building document...');
 
-        // Get configuration
-        const config = vscode.workspace.getConfiguration('markdownResumeManager');
         const filename = path.basename(filePath, '.md');
         const company = filename.split('-')[0];
 
@@ -208,7 +215,7 @@ async function buildFile(filePath, includePDF, workspaceRoot) {
 
         // Build DOCX
         const docxOutput = path.join(buildDir, `${outputName}.docx`);
-        const docxCommand = `pandoc "${filePath}" -o "${docxOutput}"`;
+        const docxCommand = `"${pandocPath}" "${filePath}" -o "${docxOutput}"`;
 
         console.log('Running command:', docxCommand);
         console.log('Working directory:', workspaceRoot);
@@ -222,7 +229,7 @@ async function buildFile(filePath, includePDF, workspaceRoot) {
         // Build PDF if requested
         if (includePDF) {
             const pdfOutput = path.join(buildDir, `${outputName}.pdf`);
-            const pdfCommand = `pandoc "${filePath}" -o "${pdfOutput}"`;
+            const pdfCommand = `"${pandocPath}" "${filePath}" -o "${pdfOutput}"`;
 
             try {
                 await execAsync(pdfCommand, { cwd: workspaceRoot });
@@ -305,12 +312,16 @@ async function initializeProject(workspaceRoot) {
         }
 
         // Check if pandoc is installed
+        const config = vscode.workspace.getConfiguration('markdownResumeManager');
+        const pandocPath = config.get('pandocPath', 'pandoc');
+
         try {
-            await execAsync('pandoc --version');
-            message += '✓ Pandoc is installed\n';
+            await execAsync(`"${pandocPath}" --version`);
+            message += `✓ Pandoc is installed (${pandocPath})\n`;
         } catch (error) {
             message += '\n⚠️  Pandoc not found!\n';
             message += 'Install from: https://pandoc.org/installing.html\n';
+            message += 'Or configure the path in settings (markdownResumeManager.pandocPath)\n';
         }
 
         const action = await vscode.window.showInformationMessage(

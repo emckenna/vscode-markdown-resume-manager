@@ -103,6 +103,11 @@
           "type": "string",
           "default": "Your_Name_Cover_Letter",
           "description": "Output filename for cover letters (without extension)"
+        },
+        "markdownResumeManager.pandocPath": {
+          "type": "string",
+          "default": "pandoc",
+          "description": "Path to Pandoc executable. On Windows, use the full path if Pandoc is not in PATH (e.g., 'C:\\Program Files\\Pandoc\\pandoc.exe')"
         }
       }
     }
