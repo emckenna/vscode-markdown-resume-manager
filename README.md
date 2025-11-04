@@ -204,9 +204,19 @@ Configure the extension in VS Code settings:
 
 **Windows users:** If Pandoc is installed but not recognized:
 
-1. Open VS Code settings (Ctrl+,)
-2. Search for "Markdown Resume Manager"
-3. Set `Pandoc Path` to the full path: `C:\Program Files\Pandoc\pandoc.exe`
+1. Find the Pandoc path in PowerShell:
+
+   ```powershell
+   where pandoc
+   # or
+   gcm pandoc
+   ```
+
+   This will show the full path (e.g., `C:\Program Files\Pandoc\pandoc.exe`)
+
+2. Open VS Code settings (Ctrl+,)
+3. Search for "Markdown Resume Manager"
+4. Set `Pandoc Path` to the full path found in step 1
 
 ### "Build folder doesn't exist"
 
