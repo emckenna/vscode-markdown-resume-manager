@@ -68,26 +68,27 @@
     ],
     "keybindings": [
       {
+        "comment": "Default keybindings designed to avoid conflicts with VS Code built-in shortcuts. Feel free to customize these in your VS Code settings (File > Preferences > Keyboard Shortcuts).",
         "command": "markdownResumeManager.newResume",
-        "key": "ctrl+k ctrl+r",
-        "mac": "cmd+k cmd+r"
+        "key": "ctrl+k ctrl+alt+n",
+        "mac": "cmd+k cmd+alt+n"
       },
       {
         "command": "markdownResumeManager.newCoverLetter",
-        "key": "ctrl+k ctrl+c",
-        "mac": "cmd+k cmd+c"
+        "key": "ctrl+k ctrl+alt+c",
+        "mac": "cmd+k cmd+alt+c"
       },
       {
         "command": "markdownResumeManager.buildDocument",
-        "key": "ctrl+k ctrl+b",
-        "mac": "cmd+k cmd+b",
-        "when": "editorLangId == markdown && resourcePath =~ /\\/(resumes|cover-letters)\\//i"
+        "key": "ctrl+k ctrl+alt+b",
+        "mac": "cmd+k cmd+alt+b",
+        "when": "editorLangId == markdown && (resourcePath =~ /[/\\\\](resumes|cover-letters)[/\\\\]/i)"
       },
       {
         "command": "markdownResumeManager.buildDocumentPDF",
-        "key": "ctrl+k ctrl+p",
-        "mac": "cmd+k cmd+p",
-        "when": "editorLangId == markdown && resourcePath =~ /\\/(resumes|cover-letters)\\//i"
+        "key": "ctrl+k ctrl+alt+d",
+        "mac": "cmd+k cmd+alt+d",
+        "when": "editorLangId == markdown && (resourcePath =~ /[/\\\\](resumes|cover-letters)[/\\\\]/i)"
       }
     ],
     "configuration": {

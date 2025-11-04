@@ -177,7 +177,8 @@ async function buildFile(filePath, includePDF, workspaceRoot) {
     try {
         // Check if pandoc is installed
         try {
-            await execAsync('pandoc --version');
+            const pandocVersion = await execAsync('pandoc --version');
+            console.log('Pandoc version:', pandocVersion.stdout);
         } catch (error) {
             vscode.window.showErrorMessage('Pandoc is not installed. Please install Pandoc from https://pandoc.org/installing.html');
             return;
@@ -200,6 +201,7 @@ async function buildFile(filePath, includePDF, workspaceRoot) {
 
         // Create build directory
         const buildDir = path.join(workspaceRoot, 'build', company);
+        console.log('Creating build directory:', buildDir);
         if (!fs.existsSync(buildDir)) {
             fs.mkdirSync(buildDir, { recursive: true });
         }
@@ -208,7 +210,14 @@ async function buildFile(filePath, includePDF, workspaceRoot) {
         const docxOutput = path.join(buildDir, `${outputName}.docx`);
         const docxCommand = `pandoc "${filePath}" -o "${docxOutput}"`;
 
-        await execAsync(docxCommand, { cwd: workspaceRoot });
+        console.log('Running command:', docxCommand);
+        console.log('Working directory:', workspaceRoot);
+
+        const result = await execAsync(docxCommand, { cwd: workspaceRoot });
+        console.log('DOCX build output:', result.stdout);
+        if (result.stderr) {
+            console.log('DOCX build stderr:', result.stderr);
+        }
 
         // Build PDF if requested
         if (includePDF) {

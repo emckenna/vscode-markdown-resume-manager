@@ -30,10 +30,10 @@ All notable changes to the "Markdown Resume Manager" extension will be documente
 
 **Keyboard Shortcuts:**
 
-- `Ctrl+K Ctrl+R` - Create new resume
-- `Ctrl+K Ctrl+C` - Create new cover letter
-- `Ctrl+K Ctrl+B` - Build current document (DOCX)
-- `Ctrl+K Ctrl+P` - Build current document (DOCX + PDF)
+- `Ctrl+K Ctrl+Alt+N` - Create new resume
+- `Ctrl+K Ctrl+Alt+C` - Create new cover letter
+- `Ctrl+K Ctrl+Alt+B` - Build current document (DOCX)
+- `Ctrl+K Ctrl+Alt+D` - Build current document (DOCX + PDF)
 
 **Cross-Platform Support:**
 

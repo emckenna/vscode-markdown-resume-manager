@@ -1,153 +1,176 @@
 # Development Guide
 
+Quick reference for developing and maintaining the Markdown Resume Manager VS Code extension.
+
 ## Project Structure
 
 ```
 vscode-markdown-resume-manager/
 ├── extension.js          # Main extension code
-├── package.json          # Extension manifest
+├── package.json          # Extension manifest and configuration
+├── logo.png              # Extension icon
 ├── test/                 # Automated tests
 │   └── extension.test.js # Test suite
 ├── test-workspace/       # Mock workspace for tests
-├── .vscode-test.mjs     # Test configuration
-├── README.md            # User documentation
-├── TESTING.md           # Testing guide
-├── CHANGELOG.md         # Version history
-├── LICENSE              # MIT License
-├── .vscodeignore        # Files to exclude from package
-├── .gitignore           # Git ignore rules
-└── DEVELOPMENT.md       # This file
+├── .vscode-test.mjs      # Test configuration
+├── .env                  # Personal Access Token (git-ignored)
+├── .vscodeignore         # Files excluded from package
+├── .gitignore            # Git ignore rules
+├── README.md             # User documentation
+├── CHANGELOG.md          # Version history
+├── DEVELOPMENT.md        # This file
+└── LICENSE               # MIT License
 ```
 
-## Automated Testing
+## Quick Start
 
-See [TESTING.md](TESTING.md) for detailed testing documentation.
-
-### Quick Test Commands
+### Initial Setup
 
 ```bash
-# Install dependencies (first time only)
+# Clone the repository
+git clone https://github.com/emckenna/vscode-markdown-resume-manager.git
+cd vscode-markdown-resume-manager
+
+# Install dependencies
 npm install
 
-# Run automated tests
+# Run tests to verify setup
 npm test
 ```
 
-### Writing Tests
+## Local Development
 
-Tests use Mocha and run in a VS Code Extension Development Host. See `test/extension.test.js` for examples.
+### Method 1: Development Mode (Recommended)
 
-## Manual Testing
+This is the fastest way to test changes during development.
 
-### Method 1: Run in Development Mode (Recommended)
-
-1. **Open the extension folder in VS Code:**
+1. **Open the extension project in VS Code:**
    ```bash
-   code /home/eric-mckenna/work/github/vscode-markdown-resume-manager
+   code .
    ```
 
 2. **Press F5** or go to **Run > Start Debugging**
+   - This launches a new VS Code window (Extension Development Host)
+   - The extension is automatically loaded in this window
 
-3. This opens a new VS Code window with the extension loaded (Extension Development Host)
+3. **Test in a sample project:**
+   - In the Extension Development Host window: File > Open Folder
+   - Open your resume project (e.g., `/home/eric-mckenna/work/github/resume`)
+   - Test the extension commands and keyboard shortcuts
 
-4. In the new window, open your resume project:
-   ```bash
-   # From the Extension Development Host window
-   File > Open Folder > /home/eric-mckenna/work/github/resume
-   ```
+4. **Making changes:**
+   - Edit `extension.js` or `package.json` in the original window
+   - In the Extension Development Host window, press `Ctrl+R` (or `Cmd+R`) to reload
+   - Changes are immediately reflected
 
-5. **Test commands:**
-   - Press `Ctrl+Shift+P` and type "Resume Manager"
-   - Try `Ctrl+Shift+Alt+N` to create a resume
-   - Try `Ctrl+Shift+B` while editing a markdown file
+5. **View logs:**
+   - Check the Debug Console in the original VS Code window
+   - Or use Output panel > Extension Host in the Extension Development Host
 
-6. **View logs:** Check the Debug Console in the original VS Code window
+### Method 2: Install Locally as VSIX
 
-### Method 2: Install as VSIX
+Use this when you want to test the extension as users would experience it.
 
-1. **Install vsce (VS Code Extension Manager):**
-   ```bash
-   npm install -g @vscode/vsce
-   ```
+```bash
+# Package the extension
+npm run package
 
-2. **Package the extension:**
-   ```bash
-   cd /home/eric-mckenna/work/github/vscode-markdown-resume-manager
-   vsce package
-   ```
+# Install the .vsix file
+code --install-extension markdown-resume-manager-1.0.1.vsix
 
-3. **Install the .vsix file:**
-   ```bash
-   code --install-extension markdown-resume-manager-1.0.0.vsix
-   ```
+# Reload VS Code
+# Test the extension in your actual workspace
 
-4. **Reload VS Code** and test
+# Uninstall when done
+# Go to Extensions view > Markdown Resume Manager > Uninstall
+```
 
-5. **Uninstall when done testing:**
-   - Extensions view > Markdown Resume Manager > Uninstall
+## Testing
 
-## Making Changes
+```bash
+# Run automated test suite
+npm test
 
-1. **Edit** `extension.js` or `package.json`
+# The tests will:
+# - Launch a VS Code instance
+# - Run all test suites
+# - Report results
+```
 
-2. **Reload the Extension Development Host:**
-   - In the Extension Development Host window
-   - Press `Ctrl+R` (or `Cmd+R` on Mac)
-   - Or use Command Palette: "Developer: Reload Window"
+See the Testing Checklist section below for manual testing scenarios.
 
-3. **Test** your changes
+## Keyboard Shortcuts Reference
 
-## Publishing to Marketplace
+Current default keybindings (as of v1.0.1):
 
-### Prerequisites
+- `Ctrl+K Ctrl+Alt+N` - Create new resume
+- `Ctrl+K Ctrl+Alt+C` - Create new cover letter
+- `Ctrl+K Ctrl+Alt+B` - Build current document (DOCX)
+- `Ctrl+K Ctrl+Alt+D` - Build current document (DOCX + PDF)
 
-1. **Create a publisher account:**
-   - Visit https://marketplace.visualstudio.com/manage
-   - Sign in with Microsoft/GitHub account
-   - Create a publisher (replace "emckenna" in package.json with your publisher name)
+These are designed to avoid conflicts with VS Code built-in shortcuts.
 
-2. **Get a Personal Access Token (PAT):**
-   - Visit https://dev.azure.com
+## Publishing to VS Code Marketplace
+
+### One-Time Setup
+
+1. **Create a Personal Access Token (PAT):**
+   - Visit https://dev.azure.com/
    - User Settings > Personal Access Tokens > New Token
-   - Scopes: Select "Marketplace (Manage)"
+   - Name: "VS Code Marketplace"
+   - Scopes: Select **Marketplace > Manage**
    - Copy the token (you won't see it again!)
 
-### Publishing Steps
-
-1. **Update version** in `package.json` and `CHANGELOG.md`
-
-2. **Login to vsce:**
+2. **Store the token in `.env` file:**
    ```bash
-   vsce login <your-publisher-name>
-   # Enter your PAT when prompted
+   # Create .env file in project root (already git-ignored)
+   echo "VSCE_PAT=your-token-here" > .env
    ```
 
-3. **Publish:**
-   ```bash
-   vsce publish
-   ```
+### Publishing a New Version
 
-4. **Or publish a specific version:**
-   ```bash
-   vsce publish minor  # Bumps 1.0.0 -> 1.1.0
-   vsce publish major  # Bumps 1.0.0 -> 2.0.0
-   vsce publish patch  # Bumps 1.0.0 -> 1.0.1
-   ```
+The project uses npm scripts that automatically read from `.env`:
 
-## Testing Checklist
+```bash
+# Test first
+npm test
 
-- [ ] Create new resume works
-- [ ] Create new cover letter works
-- [ ] Clipboard paste works
-- [ ] File overwrite protection works
-- [ ] Build to DOCX works
-- [ ] Build to DOCX + PDF works
-- [ ] Open build folder works
-- [ ] Keyboard shortcuts work
-- [ ] Command palette commands work
-- [ ] Configuration settings work
-- [ ] Works on empty file creation
-- [ ] Error handling works (missing build script, etc.)
+# Publish current version (update package.json manually first)
+npm run publish
+
+# Or auto-bump and publish
+npm run publish:patch   # 1.0.1 -> 1.0.2
+npm run publish:minor   # 1.0.1 -> 1.1.0
+npm run publish:major   # 1.0.1 -> 2.0.0
+```
+
+**Important:** Always update `CHANGELOG.md` before publishing.
+
+### Manual Publishing (Alternative)
+
+If you prefer not to use `.env`:
+
+```bash
+# Package locally
+npm run package
+
+# Publish manually
+vsce publish --pat YOUR_TOKEN_HERE
+```
+
+## What's Covered by Automated Tests
+
+The test suite (`test/extension.test.js`) covers:
+
+- ✅ Project initialization and folder structure creation
+- ✅ Resume and cover letter creation (all methods)
+- ✅ Clipboard paste functionality
+- ✅ File overwrite protection
+- ✅ Build to DOCX and PDF
+- ✅ Configuration settings
+- ✅ Error handling (Pandoc checks, missing files, etc.)
+
+Run `npm test` before publishing to ensure all tests pass.
 
 ## Debugging Tips
 
@@ -168,11 +191,11 @@ Tests use Mocha and run in a VS Code Extension Development Host. See `test/exten
 - Check the `when` clause in keybindings
 - Test without `when` clause first
 
-### Build Script Fails
+### Build Fails
 
-- Check that build.sh exists in the workspace
-- Check file permissions: `chmod +x scripts/build.sh`
 - Check pandoc is installed: `pandoc --version`
+- Verify file paths are correct (no typos in company/position names)
+- Check that you're editing a markdown file in `resumes/` or `cover-letters/` folder
 
 ## VS Code API Resources
 
@@ -197,12 +220,10 @@ Tests use Mocha and run in a VS Code Extension Development Host. See `test/exten
 
 ## Future Enhancements
 
-- [ ] Add templates support
-- [ ] Add resume preview
+- [ ] Add templates support (base resume + company-specific overlays)
+- [ ] Add resume preview in VS Code
 - [ ] Add ATS keyword checker
 - [ ] Add spell check integration
 - [ ] Add diff view for tailored vs base resume
-- [ ] Add submission tracking
-- [ ] Windows batch script support for build
-- [ ] Icon and branding
-- [ ] Automated tests
+- [ ] Add job application tracking
+- [ ] Multi-language support

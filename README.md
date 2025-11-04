@@ -34,6 +34,8 @@ A VS Code extension for managing markdown-based resumes and cover letters with a
 code --install-extension markdown-resume-manager-1.0.1.vsix
 ```
 
+[Install from Marketplace](https://marketplace.visualstudio.com/items?itemName=EricMcKenna.markdown-resume-manager)
+
 ### 2. Install Pandoc
 
 Make sure Pandoc is installed on your system:
@@ -63,7 +65,7 @@ your-resume-project/
 
 **Method 1: Keyboard Shortcut**
 
-- Press `Ctrl+K` then `Ctrl+R` (Windows/Linux) or `Cmd+K` then `Cmd+R` (Mac)
+- Press `Ctrl+K` then `Ctrl+Alt+N` (Windows/Linux) or `Cmd+K` then `Cmd+Alt+N` (Mac)
 
 **Method 2: Command Palette**
 - Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac)
@@ -81,7 +83,8 @@ your-resume-project/
 ### Creating a Cover Letter
 
 Same as above, but use:
-- Keyboard: `Ctrl+Shift+Alt+C` (or `Cmd+Shift+Alt+C`)
+
+- Keyboard: `Ctrl+K` then `Ctrl+Alt+C` (or `Cmd+K` then `Cmd+Alt+C`)
 - Command: "Resume Manager: Create New Cover Letter"
 
 ### Building Documents
@@ -89,11 +92,13 @@ Same as above, but use:
 While editing a markdown resume or cover letter:
 
 **Build to DOCX:**
-- Press `Ctrl+Shift+B` (or `Cmd+Shift+B`)
+
+- Press `Ctrl+K` then `Ctrl+Alt+B` (or `Cmd+K` then `Cmd+Alt+B`)
 - Or use Command Palette: "Resume Manager: Build Current Document (DOCX)"
 
 **Build to DOCX + PDF:**
-- Press `Ctrl+Shift+Alt+B` (or `Cmd+Shift+Alt+B`)
+
+- Press `Ctrl+K` then `Ctrl+Alt+D` (or `Cmd+K` then `Cmd+Alt+D`)
 - Or use Command Palette: "Resume Manager: Build Current Document (DOCX + PDF)"
 
 ### Opening Build Folders
@@ -116,17 +121,19 @@ All commands are available via the Command Palette (`Ctrl+Shift+P`):
 
 This extension uses **chord keybindings** (two-step shortcuts) to avoid conflicts with VS Code's built-in commands. To use a chord keybinding, press the first key combination, release it, then press the second key combination.
 
+> **Note:** These keybindings are designed to not conflict with VS Code's built-in shortcuts out of the box. However, you're free to customize them in your VS Code settings (File > Preferences > Keyboard Shortcuts) to match your preferred workflow.
+
 For example, to build a document:
 
 1. Press and release `Ctrl+K` (you'll see "Ctrl+K was pressed. Waiting for second key..." in the status bar)
-2. Then press `Ctrl+B`
+2. Then press `Ctrl+Alt+B`
 
 | Action | Windows/Linux | Mac |
 |--------|--------------|-----|
-| New Resume | `Ctrl+K Ctrl+R` | `Cmd+K Cmd+R` |
-| New Cover Letter | `Ctrl+K Ctrl+C` | `Cmd+K Cmd+C` |
-| Build (DOCX) | `Ctrl+K Ctrl+B`* | `Cmd+K Cmd+B`* |
-| Build (DOCX+PDF) | `Ctrl+K Ctrl+P` | `Cmd+K Cmd+P` |
+| New Resume | `Ctrl+K Ctrl+Alt+N` | `Cmd+K Cmd+Alt+N` |
+| New Cover Letter | `Ctrl+K Ctrl+Alt+C` | `Cmd+K Cmd+Alt+C` |
+| Build (DOCX) | `Ctrl+K Ctrl+Alt+B`* | `Cmd+K Cmd+Alt+B`* |
+| Build (DOCX+PDF) | `Ctrl+K Ctrl+Alt+D` | `Cmd+K Cmd+Alt+D` |
 
 *Only works when editing markdown files in `resumes/` or `cover-letters/` folders
 
@@ -153,7 +160,7 @@ Configure the extension in VS Code settings:
 
 2. **Copy the markdown output to clipboard**
 
-3. **In VS Code, press `Ctrl+Shift+Alt+N`**
+3. **In VS Code, press `Ctrl+K` then `Ctrl+Alt+N`**
 
 4. **Enter company**: `google`
 
@@ -165,7 +172,7 @@ Configure the extension in VS Code settings:
 
 8. **Make any edits needed**
 
-9. **Press `Ctrl+Shift+B` to build**
+9. **Press `Ctrl+K` then `Ctrl+Alt+B` to build**
 
 10. **Click "Open Build Folder"**
 
@@ -202,7 +209,7 @@ Configure the extension in VS Code settings:
 
 - PDF generation requires additional dependencies
 - Install WeasyPrint: `pip install weasyprint`
-- Or use DOCX-only builds with `Ctrl+Shift+B`
+- Or use DOCX-only builds with `Ctrl+K` then `Ctrl+Alt+B`
 
 ### Keyboard shortcuts not working
 
