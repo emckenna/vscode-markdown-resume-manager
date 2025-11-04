@@ -72,11 +72,11 @@ This is the fastest way to test changes during development.
 Use this when you want to test the extension as users would experience it.
 
 ```bash
-# Package the extension
+# Package the extension (output goes to dist/ folder)
 npm run package
 
 # Install the .vsix file
-code --install-extension markdown-resume-manager-1.0.1.vsix
+code --install-extension dist/markdown-resume-manager-1.0.1.vsix
 
 # Reload VS Code
 # Test the extension in your actual workspace

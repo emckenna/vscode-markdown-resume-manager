@@ -110,7 +110,7 @@
   "scripts": {
     "test": "vscode-test",
     "lint": "echo 'No linting configured'",
-    "package": "vsce package",
+    "package": "mkdir -p dist && vsce package --out dist/",
     "prepublish": "npm test",
     "publish": "bash -c 'export $(grep -v \"^#\" .env | xargs) && vsce publish --pat $VSCE_PAT'",
     "publish:major": "bash -c 'export $(grep -v \"^#\" .env | xargs) && vsce publish major --pat $VSCE_PAT'",
@@ -118,11 +118,11 @@
     "publish:patch": "bash -c 'export $(grep -v \"^#\" .env | xargs) && vsce publish patch --pat $VSCE_PAT'"
   },
   "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.x",
+    "@types/vscode": "^1.60.0",
     "@vscode/test-cli": "^0.0.4",
     "@vscode/test-electron": "^2.3.8",
-    "@types/vscode": "^1.60.0",
-    "@types/mocha": "^10.0.6",
-    "@types/node": "^20.x"
-  },
-  "dependencies": {}
+    "@vscode/vsce": "^3.6.2"
+  }
 }

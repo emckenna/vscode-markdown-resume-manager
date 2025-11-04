@@ -244,7 +244,7 @@ npm test                    # Run extension tests
 
 **Packaging:**
 ```bash
-npm run package             # Create .vsix file for distribution
+npm run package             # Create .vsix file in dist/ folder
 ```
 
 **Publishing to VS Code Marketplace:**
